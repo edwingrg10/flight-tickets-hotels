@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.sub-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Montserrat;
+    font-weight: 400;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Montserrat;
+    font-weight: 200;
+    font-size: 12px;
+}
+
+.sub-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.sub-title-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: Montserrat;
+    font-weight: 400;
+}
+
+.sub-content-flights {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+mat-divider {
+    margin-bottom: 10px;
+}

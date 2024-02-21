@@ -1,0 +1,229 @@
+<mat-card
+  style="display: flex;flex-direction: column;justify-content: center;border-radius: 25px;margin: 25px 50px 50px 50px;">
+  <form [formGroup]="form" autocomplete="off" class="container">
+    <p class="title">SOLICITUD TIQUETES Y HOTELES</p>
+    <mat-radio-group class="radio-group" formControlName="typeTravel">
+      <mat-radio-button value="colombian">COLOMBIAN TOURIST</mat-radio-button>
+      <mat-radio-button value="satena">SATENA</mat-radio-button>
+      <mat-radio-button value="otro">OTRO</mat-radio-button>
+    </mat-radio-group>
+    <div class="container">
+      <div class="sub-content">
+        <p class="sub-title">INFORMACIÓN PERSONAL</p>
+        <button class="button" mat-flat-button color="primary" (click)="addTraveler()">Agregar</button>
+      </div>
+      <mat-paginator [hidden]="travellers.length==0" id="paginatorTravellers"
+        style="background-color: transparent !important;font-family: Montserrat;color: #535353;"
+        [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
+      </mat-paginator>
+      <table mat-table [dataSource]="dataSourceTravellers" class="table" matSort>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRES / NAME </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> APELLIDO/LAST NAME </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="identificationType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> TIPO DE IDENTIDICACION / ID TYPE </th>
+          <td mat-cell *matCellDef="let element"> {{element.identificationType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="identification">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> NUMERO DE IDENTIFICACION / ID # </th>
+          <td mat-cell *matCellDef="let element"> {{element.identification}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> CEL/ MOB </th>
+          <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="birthDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA NACIMIENTO /DATE OF BIRTH </th>
+          <td mat-cell *matCellDef="let element"> {{element.birthDate | date : 'yyyy-MM-dd'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="hasHoldSuitcase">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ¿Lleva maleta en bodega de carga? </th>
+          <td mat-cell *matCellDef="let element"> {{element.hasHoldSuitcase ? 'Si' : 'No'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions" class="actions-item-table">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" matTooltip="Editar" (click)="addTraveler(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Eliminar" *ngIf="!element.loading"
+              (click)="deleteTraveler(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <mat-spinner diameter="25" *ngIf="element.loading"></mat-spinner>
+          </mat-cell>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsTravellers"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsTravellers;"></tr>
+      </table>
+      <p class="message" *ngIf="travellers.length==0">No se encontraron resultados.</p>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="container">
+      <div class="sub-content">
+        <p class="sub-title-row">Departamento: <span style="font-size: 12px;"> &nbsp;RRHH y ADMINISTRACION</span>&nbsp;
+          Area:&nbsp; <span style="font-size: 12px;">CORPORATE SERVICES</span></p>
+        <button class="button" mat-flat-button color="primary" (click)="addStep2()">Agregar</button>
+      </div>
+      <mat-paginator [hidden]="itemsStepTwo.length==0" id="paginatorItemsTwo"
+        style="background-color: transparent !important;font-family: Montserrat;color: #535353;"
+        [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
+      </mat-paginator>
+      <table mat-table [dataSource]="dataSourceItemsTwo" class="table" matSort>
+        <ng-container matColumnDef="afeCC">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> AFE O CC </th>
+          <td mat-cell *matCellDef="let element"> {{element.afeCC}} </td>
+        </ng-container>
+        <ng-container matColumnDef="account">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> CUENTA/ ACCOUNT </th>
+          <td mat-cell *matCellDef="let element"> {{element.account}} </td>
+        </ng-container>
+        <ng-container matColumnDef="actions" class="actions-item-table">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" matTooltip="Editar" (click)="addStep2(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Eliminar" *ngIf="!element.loading"
+              (click)="deleteStepTwo(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <mat-spinner diameter="25" *ngIf="element.loading"></mat-spinner>
+          </mat-cell>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsItemsTwo"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsItemsTwo;"></tr>
+      </table>
+      <p class="message" *ngIf="itemsStepTwo.length==0">No se encontraron resultados.</p>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <mat-form-field class="example-full-width widthR" appearance="fill">
+      <mat-label>MOTIVO DEL VIAJE/PURPOSE OF TRAVEL:</mat-label>
+      <input matInput class="input" type="text" name="purposeTravel" formControlName="purposeTravel">
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <div class="container">
+      <div class="sub-content">
+        <p class="sub-title">INFORMACIÓN DEL VUELO / FLIGHT INFORMATION </p>
+      </div>
+      <div class="sub-content-flights">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input matInput [matDatepicker]="picker" formControlName="flightDate" placeholder="FECHA / DATE">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>DESDE / FROM:</mat-label>
+          <mat-select name="flightFrom" formControlName="flightFrom">
+            <mat-option *ngFor="let airport of airports" [value]="airport"
+              [matTooltip]="airport.name + ', ' + airport.city.name">
+              {{airport.name + ' ' + airport.city.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>HACIA / TO :</mat-label>
+          <mat-select name="flightTo" formControlName="flightTo">
+            <mat-option *ngFor="let airport of airports" [value]="airport"
+              [matTooltip]="airport.name + ', ' + airport.city.name">
+              {{airport.name + ' ' + airport.city.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>AEROLINEA/ AIRLINE:</mat-label>
+          <mat-select name="flightAirline" formControlName="flightAirline">
+            <mat-option *ngFor="let airline of airlines" [value]="airline">
+              {{airline}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>HORA/ TIME :</mat-label>
+          <input matInput type="time" formControlName="flightTime">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="container">
+      <div class="sub-content">
+        <p class="sub-title">INFORMACIÓN DEL HOYEL / HOTEL INFORMATION </p>
+      </div>
+      <div class="sub-content-flights">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>AFE O CC </mat-label>
+          <input matInput class="input" type="number" name="hotelCC" formControlName="hotelCC">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>CUENTA/ ACCOUNT </mat-label>
+          <input matInput class="input" type="number" name="hotelAccount" formControlName="hotelAccount">
+        </mat-form-field>
+      </div>
+      <p>ESTADIA </p>
+      <div class="sub-content-flights">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>CIUDAD / HOTEL SUGERIDO CITY / SUGGESTED HOTEL:</mat-label>
+          <mat-select name="hotelCity" formControlName="hotelCity">
+            <mat-option *ngFor="let city of cities" [value]="city">
+              {{city.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input matInput [matDatepicker]="pickerDateCheckIn" formControlName="hotelDateCheckIn"
+            placeholder="FECHA DE ENTRADA / CHECK IN  DATE">
+          <mat-datepicker-toggle matSuffix [for]="pickerDateCheckIn"></mat-datepicker-toggle>
+          <mat-datepicker #pickerDateCheckIn></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input matInput [matDatepicker]="pickerDateChockOut" formControlName="hotelDateChockOut"
+            placeholder="FECHA DE SALIDA /CHECK  OUT">
+          <mat-datepicker-toggle matSuffix [for]="pickerDateChockOut"></mat-datepicker-toggle>
+          <mat-datepicker #pickerDateChockOut></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>OBSERVACIONES</mat-label>
+        <input matInput class="input" type="text" name="observations" formControlName="observations">
+      </mat-form-field>
+
+      <mat-divider></mat-divider>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nombre del solicitante del servicio ante la agencia de viajes o convenio</mat-label>
+        <input matInput class="input" type="text" name="applicantName" formControlName="applicantName">
+      </mat-form-field>
+    </div>
+
+    <div class="actions">
+      <button class="button" mat-flat-button color="primary" (click)="finishForm()"
+        [disabled]="form.invalid">Guardar</button>
+    </div>
+  </form>
+</mat-card>

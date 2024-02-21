@@ -1,0 +1,16 @@
+<form [formGroup]="form" autocomplete="off" class="container">
+  <p class="title">ACCOUNT</p>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>AFE O CC:</mat-label>
+    <input matInput class="input" type="text" name="afeCC" formControlName="afeCC">
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>CUENTA/ ACCOUNT:</mat-label>
+    <input matInput class="input" type="number" name="account" formControlName="account">
+  </mat-form-field>
+  <div class="actions">
+    <button class="button" mat-flat-button (click)="dialogRef.close()">Cancelar</button>
+    <button class="button" mat-flat-button color="primary" (click)="finishForm()"
+      [disabled]="form.invalid">Guardar</button>
+  </div>
+</form>

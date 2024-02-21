@@ -1,1 +1,62 @@
-/* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("@fontsource/montserrat");
+@import url("@fontsource/montserrat/400.css");
+@import url("@fontsource/montserrat/400-italic.css");
+
+.snack-success {
+    background-color: #4dd181;
+    color: #fff;
+}
+
+.snack-success .mat-button-wrapper {
+    color: #fff;
+}
+
+.snack-error {
+    background-color: #fc2e52;
+    color: #fff;
+}
+
+.snack-error .mat-button-wrapper {
+    color: #fff;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: end;
+    gap: 5px;
+    margin-top: 15px;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+th {
+    width: 150px !important;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #4a5a63;
+}
+
+td {
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #4a5a63;
+}
